@@ -1,6 +1,7 @@
 # liff-cli
 
-LIFF(LINE Front-end Framework) cli tool
+LIFF(LINE Front-end Framework) cli tool  
+https://developers.line.me/en/docs/liff/overview/
 
 # Installation
 ```
@@ -18,7 +19,9 @@ $ liff list
 # Todo
 - add
 - remove by LIFF ID
-- remote
-- push
 - remove by Web URL
-- init
+- remove by No.
+- push  
+send to LIFF App URL to Bot
+- init {LINE_ACCESS_TOKEN}
+export LINE_ACCESS_TOKEN by command
