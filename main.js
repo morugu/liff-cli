@@ -179,6 +179,7 @@ else {
         update <liffId> <url> <type:full|tall|compact>: update the liff application.
         delete <liffId>: delete specified liff
         deleteAll: delete all liff applications.
+        send: send liff application URL to sepecified LINE user.
         
         [example]
         liff list
@@ -187,6 +188,7 @@ else {
         liff update 1555709429-5zJQmooA https://developers.line.me/en/docs/liff/overview/ tall
         liff delete 1555709429-5zJQmooA
         liff deleteAll
+        liff send 1555709429-5zJQmooA Ue52d11061890315xxxxxxxxxxx
     `;
 
     console.log(help);
