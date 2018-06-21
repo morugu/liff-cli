@@ -59,7 +59,7 @@ else if (process.argv[2] === 'add') {
     let app_url = process.argv[3];
     let type = process.argv[4];
 
-    if (type !== "full" || type !== "tall" || type !== "compact") {
+    if (type !== "full" && type !== "tall" && type !== "compact") {
         console.log('Supported types are full, tall or compact.');
         return;
     }
@@ -102,6 +102,11 @@ else if (process.argv[2] === 'update') {
     let app_url = process.argv[4];
     let type = process.argv[5];
 
+    if (type !== "full" && type !== "tall" && type !== "compact") {
+        console.log('Supported types are full, tall or compact.');
+        return;
+    }
+    
     let view = { "type": type, "url": app_url };
     let jsonView = JSON.stringify(view);
     const options = {
