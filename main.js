@@ -17,30 +17,7 @@ if (!process.env.LINE_ACCESS_TOKEN) {
     return;
 }
 
-if (process.argv[2] === '?' || process.argv[2] === 'help' || process.argv[2] === 'h') {
-
-    let help = `welcome to liff tool. 
-
-    [usage]
-    list: list all registered liff applications.
-    add <url> <type:full|tall|compact>: create new liff application.
-    update <liffId> <url> <type:full|tall|compact>: update the liff application.
-    delete <liffId>: delete specified liff
-    deleteAll: delete all liff applications.
-    
-    [example]
-    liff list
-    liff add https://developers.line.me/en/docs/liff/overview/ tall
-    liff add https://developers.line.me/en/docs/liff/overview/ compact
-    liff update 1555709429-5zJQmooA https://developers.line.me/en/docs/liff/overview/ tall
-    liff delete 1555709429-5zJQmooA
-    liff deleteAll
-`;
-
-    console.log(help);
-}
-
-else if (process.argv[2] === 'list') {
+if (process.argv[2] === 'list') {
     listLiff().then((jsonResult) => {
         jsonResult.apps.forEach((l, i) => {
             console.log('---------------------------------------------------');
@@ -160,8 +137,8 @@ else if (process.argv[2] === 'send') {
 
     let liffId = process.argv[3];
     let userId = process.argv[4];
-   
-    let message = { "to": userId, "messages": [{"type":"text","text":`line://app/${liffId}`}]};
+
+    let message = { "to": userId, "messages": [{ "type": "text", "text": `line://app/${liffId}` }] };
     let jsonMessage = JSON.stringify(message);
     const options = {
         url: `https://api.line.me/v2/bot/message/push`,
@@ -190,6 +167,29 @@ else if (process.argv[2] === 'send') {
 
         console.log(`Message sent to ${userId}`);
     });
+}
+
+else {
+
+    let help = `welcome to liff tool. 
+    
+        [usage]
+        list: list all registered liff applications.
+        add <url> <type:full|tall|compact>: create new liff application.
+        update <liffId> <url> <type:full|tall|compact>: update the liff application.
+        delete <liffId>: delete specified liff
+        deleteAll: delete all liff applications.
+        
+        [example]
+        liff list
+        liff add https://developers.line.me/en/docs/liff/overview/ tall
+        liff add https://developers.line.me/en/docs/liff/overview/ compact
+        liff update 1555709429-5zJQmooA https://developers.line.me/en/docs/liff/overview/ tall
+        liff delete 1555709429-5zJQmooA
+        liff deleteAll
+    `;
+
+    console.log(help);
 }
 
 function listLiff() {
