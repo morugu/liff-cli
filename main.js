@@ -20,7 +20,7 @@ if (process.argv[2] === '?' || process.argv[2] === 'help' || process.argv[2] ===
     add <url> <type:full|tall|compact>: create new liff application.
     update <liffId> <url> <type:full|tall|compact>: update the liff application.
     delete <liffId>: delete specified liff
-    deleteAddl: delete all liff applications.
+    deleteAll: delete all liff applications.
     
     [example]
     liff list
