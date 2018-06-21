@@ -7,7 +7,13 @@ const fs = require('fs');
 const url = "https://api.line.me/liff/v1/apps";
 
 if (!process.env.LINE_ACCESS_TOKEN) {
-    console.log('Error: set environment variable following command. \n$ export LINE_ACCESS_TOKEN={YOUR_LINE_ACCESS_TOKEN}');
+    if (process.platform === "win32") {
+        console.log('Error: set environment variable following command. \nSET LINE_ACCESS_TOKEN={YOUR_LINE_ACCESS_TOKEN}');
+
+    }
+    else {
+        console.log('Error: set environment variable following command. \n$ export LINE_ACCESS_TOKEN={YOUR_LINE_ACCESS_TOKEN}');
+    }
     return;
 }
 
@@ -75,6 +81,11 @@ else if (process.argv[2] === 'add') {
 
     let app_url = process.argv[3];
     let type = process.argv[4];
+
+    if (type !== "full" || type !== "tall" || type !== "compact") {
+        console.log('Supported types are full, tall or compact.');
+        return;
+    }
 
     let view = { "view": { "type": type, "url": app_url } };
     let jsonView = JSON.stringify(view);
