@@ -152,6 +152,46 @@ else if (process.argv[2] === 'update') {
     });
 }
 
+else if (process.argv[2] === 'send') {
+    if (process.argv.length != 5) {
+        console.log('Bad argumentes. i.e. >liff send 1555709429-7aZa9EEq Ue52d11061890315xxxxxxxxxxx');
+        return;
+    }
+
+    let liffId = process.argv[3];
+    let userId = process.argv[4];
+   
+    let message = { "to": userId, "messages": [{"type":"text","text":`line://app/${liffId}`}]};
+    let jsonMessage = JSON.stringify(message);
+    const options = {
+        url: `https://api.line.me/v2/bot/message/push`,
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${process.env.LINE_ACCESS_TOKEN}`,
+            'Content-Type': 'application/json'
+        },
+        body: jsonMessage
+    };
+
+    request(options, (error, response, body) => {
+        if (response.statusCode === 401) {
+            console.log(`${response.statusCode} Authentication failed.`);
+            return;
+        } else if (response.statusCode === 400) {
+            let jsonResult = JSON.parse(body);
+            console.log(`${jsonResult.message}`);
+            return;
+        }
+        if (response.statusCode !== 200) {
+            let jsonResult = JSON.parse(body);
+            console.log(`${jsonResult.message}`);
+            return;
+        }
+
+        console.log(`Message sent to ${userId}`);
+    });
+}
+
 function listLiff() {
     const options = {
         url: url,
