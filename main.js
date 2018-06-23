@@ -5,7 +5,7 @@
 const request = require('request');
 require('dotenv').config()
 const fs = require('fs');
-const url = "https://api.line.me/liff/v1/apps";
+const apiRequest = require('./apiRequest');
 
 if (process.argv[2] === 'init') {
     if (!process.argv[3]) {
@@ -32,7 +32,7 @@ if (!process.env.LINE_ACCESS_TOKEN || process.env.LINE_ACCESS_TOKEN == '') {
 }
 
 if (process.argv[2] === 'list') {
-    listLiff().then((jsonResult) => {
+    apiRequest.listLiff().then((jsonResult) => {
         jsonResult.apps.forEach((l, i) => {
             console.log('---------------------------------------------------');
             console.log(`No.${i + 1}`);
@@ -52,14 +52,14 @@ else if (process.argv[2] === 'delete') {
 
     let liffId = process.argv[3];
 
-    deleteLiff(liffId).then((result) => { console.log(result) }).catch((reason) => { console.log(reason) });
+    apiRequest.deleteLiff(liffId).then((result) => { console.log(result) }).catch((reason) => { console.log(reason) });
 }
 
 else if (process.argv[2] === 'deleteAll') {
-    listLiff().then((jsonResult) => {
+    apiRequest.listLiff().then((jsonResult) => {
 
         jsonResult.apps.forEach((l, i) => {
-            deleteLiff(l.liffId).then((result) => { console.log(result) }).catch((reason) => { console.log(reason) });
+            apiRequest.deleteLiff(l.liffId).then((result) => { console.log(result) }).catch((reason) => { console.log(reason) });
         })
     }).catch((reason) => console.log(reason));
 }
@@ -79,31 +79,7 @@ else if (process.argv[2] === 'add') {
     }
 
     let view = { "view": { "type": type, "url": app_url } };
-    let jsonView = JSON.stringify(view);
-    const options = {
-        url: `${url}`,
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${process.env.LINE_ACCESS_TOKEN}`,
-            'Content-Type': 'application/json'
-        },
-        body: jsonView
-    };
-
-    request(options, (error, response, body) => {
-        if (response.statusCode === 401) {
-            console.log(`${response.statusCode} Authentication failed.`);
-        } else if (response.statusCode === 400) {
-            let jsonResult = JSON.parse(body);
-            console.log(`${jsonResult.message}`);
-        }
-        if (response.statusCode !== 200) {
-            return;
-        }
-
-        let jsonResult = JSON.parse(body);
-        console.log(`[LIFF ID] ${jsonResult.liffId} created`);
-    });
+    apiRequest.addLiff(view).then((result) => { console.log(result) }).catch((reason) => { console.log(reason) });
 }
 
 else if (process.argv[2] === 'update') {
@@ -120,32 +96,9 @@ else if (process.argv[2] === 'update') {
         console.log('Supported types are full, tall or compact.');
         return;
     }
-    
+
     let view = { "type": type, "url": app_url };
-    let jsonView = JSON.stringify(view);
-    const options = {
-        url: `${url}/${liffId}/view`,
-        method: 'PUT',
-        headers: {
-            'Authorization': `Bearer ${process.env.LINE_ACCESS_TOKEN}`,
-            'Content-Type': 'application/json'
-        },
-        body: jsonView
-    };
-
-    request(options, (error, response, body) => {
-        if (response.statusCode === 401) {
-            console.log(`${response.statusCode} Authentication failed.`);
-        } else if (response.statusCode === 400) {
-            let jsonResult = JSON.parse(body);
-            console.log(`${jsonResult.message}`);
-        }
-        if (response.statusCode !== 200) {
-            return;
-        }
-
-        console.log(`[LIFF ID] ${liffId} has been updated`);
-    });
+    apiRequest.updateLiff(liffId, view).then((result) => { console.log(result) }).catch((reason) => { console.log(reason) });
 }
 
 else if (process.argv[2] === 'send') {
@@ -157,35 +110,7 @@ else if (process.argv[2] === 'send') {
     let liffId = process.argv[3];
     let userId = process.argv[4];
 
-    let message = { "to": userId, "messages": [{ "type": "text", "text": `line://app/${liffId}` }] };
-    let jsonMessage = JSON.stringify(message);
-    const options = {
-        url: `https://api.line.me/v2/bot/message/push`,
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${process.env.LINE_ACCESS_TOKEN}`,
-            'Content-Type': 'application/json'
-        },
-        body: jsonMessage
-    };
-
-    request(options, (error, response, body) => {
-        if (response.statusCode === 401) {
-            console.log(`${response.statusCode} Authentication failed.`);
-            return;
-        } else if (response.statusCode === 400) {
-            let jsonResult = JSON.parse(body);
-            console.log(`${jsonResult.message}`);
-            return;
-        }
-        if (response.statusCode !== 200) {
-            let jsonResult = JSON.parse(body);
-            console.log(`${jsonResult.message}`);
-            return;
-        }
-
-        console.log(`Message sent to ${userId}`);
-    });
+    apiRequest.sendLiff(liffId, jsonView).then((result) => { console.log(result) }).catch((reason) => { console.log(reason) });
 }
 
 else {
@@ -213,55 +138,4 @@ else {
     `;
 
     console.log(help);
-}
-
-function listLiff() {
-    const options = {
-        url: url,
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${process.env.LINE_ACCESS_TOKEN}`,
-            'Content-Type': 'application/json'
-        }
-    };
-    return new Promise((resolve, reject) => {
-        request(options, (error, response, body) => {
-            if (response.statusCode === 401) {
-                return reject(`${response.statusCode} Authentication failed.`);
-            } else if (response.statusCode === 404) {
-                let jsonResult = JSON.parse(body);
-                return reject(`${jsonResult.message}`);
-            }
-            if (response.statusCode !== 200) {
-                return reject("something went wrong");
-            }
-
-            let jsonResult = JSON.parse(body);
-            return resolve(jsonResult);
-        });
-    })
-}
-
-function deleteLiff(liffId) {
-    const options = {
-        url: `${url}/${liffId}`,
-        method: 'DELETE',
-        headers: {
-            'Authorization': `Bearer ${process.env.LINE_ACCESS_TOKEN}`
-        }
-    };
-    return new Promise((resolve, reject) => {
-        request(options, (error, response, body) => {
-            if (response.statusCode === 401) {
-                return reject(`${response.statusCode} Authentication failed.`);
-            } else if (response.statusCode === 404) {
-                return reject(`${response.statusCode} There is no LIFF app on the channel.`);
-            }
-            if (response.statusCode !== 200) {
-                return reject("something went wrong");
-            }
-
-            return resolve(`[LIFF ID] ${liffId} has been deleted`);
-        });
-    })
 }
