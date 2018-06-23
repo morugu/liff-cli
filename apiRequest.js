@@ -97,6 +97,7 @@ var apiRequest = {
                 if(apiRequest.isFaledStatus(response, body)) { return }
                 let jsonResult = JSON.parse(body);
                 console.log(`[LIFF ID] ${jsonResult.liffId} created`);
+                console.log(`accessible uri : line://app/${jsonResult.liffId}`);
             });
         })
     },
