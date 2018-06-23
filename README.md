@@ -6,10 +6,16 @@ https://developers.line.me/en/docs/liff/overview/
 # Installation
 ```
 $ npm install -g liff
-$ export LINE_ACCESS_TOKEN={YOUR_LINE_ACCESS_TOKEN}
+$ liff init _line_access_token_
 ```
 
 # Usage
+### init
+set liff commands.
+
+```
+$ liff init _line_access_token_
+```
 
 ### list
 list all registered liff applications.
@@ -56,6 +62,7 @@ $ liff send <liffId> <userId>
 ## examples
 
 ```
+liff init _line_access_token_
 liff list
 liff add https://developers.line.me/en/docs/liff/overview/ tall
 liff add https://developers.line.me/en/docs/liff/overview/ compact
@@ -64,9 +71,3 @@ liff delete 1555709429-5zJQmooA
 liff deleteAll
 liff send 1555709429-5zJQmooA Ue52d11061890315xxxxxxxxxxx
 ```
-
-# Todo
-
-send to LIFF App URL to Bot
-- init {LINE_ACCESS_TOKEN}
-export LINE_ACCESS_TOKEN by command

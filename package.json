@@ -17,6 +17,8 @@
     "liff": "./main.js"
   },
   "dependencies": {
+    "dotenv": "^6.0.0",
+    "fs": "0.0.1-security",
     "request": "^2.87.0"
   }
 }
