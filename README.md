@@ -6,7 +6,7 @@ https://developers.line.me/en/docs/liff/overview/
 # Installation
 ```
 $ npm install -g liff
-$ liff init _line_access_token_
+$ liff init {LINE_ACCESS_TOKEN}
 ```
 
 # Usage
@@ -14,7 +14,7 @@ $ liff init _line_access_token_
 set liff commands.
 
 ```
-$ liff init _line_access_token_
+$ liff init {LINE_ACCESS_TOKEN}
 ```
 
 ### list
@@ -62,7 +62,7 @@ $ liff send <liffId> <userId>
 ## examples
 
 ```
-liff init _line_access_token_
+liff init {LINE_ACCESS_TOKEN}
 liff list
 liff add https://developers.line.me/en/docs/liff/overview/ tall
 liff add https://developers.line.me/en/docs/liff/overview/ compact

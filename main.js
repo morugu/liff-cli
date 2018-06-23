@@ -23,10 +23,10 @@ if (process.argv[2] === 'init') {
 
 if (!process.env.LINE_ACCESS_TOKEN || process.env.LINE_ACCESS_TOKEN == '') {
     if (process.platform === "win32") {
-        console.log('Error: set environment variable following command. \n$ liff init _LINE_ACCESS_TOKEN_');
+        console.log('Error: set environment variable following command. \n$ liff init {LINE_ACCESS_TOKEN}');
     }
     else {
-        console.log('Error: set environment variable following command. \n$ liff init _LINE_ACCESS_TOKEN_');
+        console.log('Error: set environment variable following command. \n$ liff init {LINE_ACCESS_TOKEN}');
     }
     return;
 }
@@ -193,7 +193,7 @@ else {
     let help = `welcome to liff tool. 
     
         [usage]
-        init: set liff command.
+        init: set liff commands.
         list: list all registered liff applications.
         add <url> <type:full|tall|compact>: create new liff application.
         update <liffId> <url> <type:full|tall|compact>: update the liff application.
@@ -202,7 +202,7 @@ else {
         send: send liff application URL to sepecified LINE user.
         
         [example]
-        liff init _LINE_ACCESS_TOKEN_
+        liff init {LINE_ACCESS_TOKEN}
         liff list
         liff add https://developers.line.me/en/docs/liff/overview/ tall
         liff add https://developers.line.me/en/docs/liff/overview/ compact
