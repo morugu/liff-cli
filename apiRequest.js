@@ -13,7 +13,7 @@ var apiRequest = {
         };
         return new Promise((resolve, reject) => {
             request(options, (error, response, body) => {
-                if(apiRequest.isFaledStatus(response, body)) { return }
+                if(apiRequest.isFailedStatus(response, body)) { return }
 
                 let jsonResult = JSON.parse(body);
                 return resolve(jsonResult);
@@ -31,7 +31,7 @@ var apiRequest = {
         };
         return new Promise((resolve, reject) => {
             request(options, (error, response, body) => {
-                if(apiRequest.isFaledStatus(response, body)) { return }
+                if(apiRequest.isFailedStatus(response, body)) { return }
 
                 return resolve(`[LIFF ID] ${liffId} has been deleted`);
             });
@@ -51,7 +51,7 @@ var apiRequest = {
         };
         return new Promise((resolve, reject) => {
             request(options, (error, response, body) => {
-                if(apiRequest.isFaledStatus(response, body)) { return }
+                if(apiRequest.isFailedStatus(response, body)) { return }
 
                 console.log(`[LIFF ID] ${liffId} has been updated`);
             });
@@ -73,7 +73,7 @@ var apiRequest = {
 
         return new Promise((resolve, reject) => {
             request(options, (error, response, body) => {
-                if(apiRequest.isFaledStatus(response, body)) { return }
+                if(apiRequest.isFailedStatus(response, body)) { return }
 
                 console.log(`Message sent to ${userId}`);
             });
@@ -94,7 +94,7 @@ var apiRequest = {
 
         return new Promise((resolve, reject) => {
             request(options, (error, response, body) => {
-                if(apiRequest.isFaledStatus(response, body)) { return }
+                if(apiRequest.isFailedStatus(response, body)) { return }
                 let jsonResult = JSON.parse(body);
                 console.log(`[LIFF ID] ${jsonResult.liffId} created`);
                 console.log(`accessible uri : line://app/${jsonResult.liffId}`);
@@ -102,7 +102,7 @@ var apiRequest = {
         })
     },
 
-    isFaledStatus: function(response, body){
+    isFailedStatus: function(response, body){
         if (response.statusCode === 401) {
             console.log(`${response.statusCode} Authentication failed.`);
         } else if (response.statusCode === 400) {
