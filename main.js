@@ -2,16 +2,31 @@
 
 'use strict';
 
+const request = require('request');
+require('dotenv').config()
 const fs = require('fs');
 const apiRequest = require('./apiRequest');
 
-if (!process.env.LINE_ACCESS_TOKEN) {
-    if (process.platform === "win32") {
-        console.log('Error: set environment variable following command. \nSET LINE_ACCESS_TOKEN={YOUR_LINE_ACCESS_TOKEN}');
+if (process.argv[2] === 'init') {
+    if (!process.argv[3]) {
+        console.log('Bad argumentes. i.e. >liff init _LINE_ACCESS_TOKEN_) ');
+        return;
+    }
 
+    const LINE_ACCESS_TOKEN = process.argv[3];
+    fs.writeFile('.env', `LINE_ACCESS_TOKEN="${LINE_ACCESS_TOKEN}"`, (err) => {
+      if (err) { throw err; }
+    });
+    console.log(`write ${LINE_ACCESS_TOKEN} in .env file`);
+    return
+}
+
+if (!process.env.LINE_ACCESS_TOKEN || process.env.LINE_ACCESS_TOKEN == '') {
+    if (process.platform === "win32") {
+        console.log('Error: set environment variable following command. \n$ liff init {LINE_ACCESS_TOKEN}');
     }
     else {
-        console.log('Error: set environment variable following command. \n$ export LINE_ACCESS_TOKEN={YOUR_LINE_ACCESS_TOKEN}');
+        console.log('Error: set environment variable following command. \n$ liff init {LINE_ACCESS_TOKEN}');
     }
     return;
 }
@@ -103,6 +118,7 @@ else {
     let help = `welcome to liff tool. 
     
         [usage]
+        init: set liff commands.
         list: list all registered liff applications.
         add <url> <type:full|tall|compact>: create new liff application.
         update <liffId> <url> <type:full|tall|compact>: update the liff application.
@@ -111,6 +127,7 @@ else {
         send: send liff application URL to sepecified LINE user.
         
         [example]
+        liff init {LINE_ACCESS_TOKEN}
         liff list
         liff add https://developers.line.me/en/docs/liff/overview/ tall
         liff add https://developers.line.me/en/docs/liff/overview/ compact
