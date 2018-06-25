@@ -110,7 +110,7 @@ else if (process.argv[2] === 'send') {
     let liffId = process.argv[3];
     let userId = process.argv[4];
 
-    apiRequest.sendLiff(liffId, jsonView).then((result) => { console.log(result) }).catch((reason) => { console.log(reason) });
+    apiRequest.sendLiff(liffId, userId).then((result) => { console.log(result) }).catch((reason) => { console.log(reason) });
 }
 
 else {
