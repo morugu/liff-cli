@@ -58,7 +58,7 @@ var apiRequest = {
         })
     },
 
-    sendLiff: function(liifId, userId){
+    sendLiff: function(liffId, userId){
         let message = { "to": userId, "messages": [{ "type": "text", "text": `line://app/${liffId}` }] };
         let jsonMessage = JSON.stringify(message);
         const options = {
