@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>sample application</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    </head>
+    
+    <body>
+        <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+        <div id='user_name'>Name : XXXX</div>
+        <img id='user_photo' src="" width="200px"/>
+        <button onclick='clicked()'>send_message</button>
+        <script>
+            liff.init(
+              data => {
+                // Now you can call LIFF API
+                const userId = data.context.userId;
+                liff.getProfile()
+                .then(profile => {
+                  document.getElementById('user_name').innerText = 'Name : ' + profile.displayName;
+                  const name = profile.displayName
+                  document.getElementById('user_photo').src = profile.pictureUrl;
+                })
+                .catch((err) => {
+                  console.log('error', err);
+                });
+            
+              },
+              err => {
+                // LIFF initialization failed
+              }
+            );
+            clicked = function(){
+                liff.sendMessages([
+                  {
+                    type:'text',
+                    text:'Hello, World!'
+                  }
+                ])
+            }
+        </script>
+    </body>
+</html>

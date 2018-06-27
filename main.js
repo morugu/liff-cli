@@ -113,6 +113,27 @@ else if (process.argv[2] === 'send') {
     apiRequest.sendLiff(liffId, userId).then((result) => { console.log(result) }).catch((reason) => { console.log(reason) });
 }
 
+else if (process.argv[2] === 'create') {
+    if (process.argv.length != 4) {
+        console.log('Bad argumentes. i.e. >liff add index');
+        return;
+    }
+    
+    fs.readFile(process.cwd() + '/static/sample.html', 'utf8', function (err, text) {
+        if (err) {
+            console.log('cannot read original html');
+            throw err;
+        }
+        fs.writeFile(`./${process.argv[3]}.html`, text, (err) => {
+          if (err) {
+              console.log(`cannot read ${process.argv[3]}.html`);
+              throw err;
+          }
+          console.log(`create sample app ${process.argv[3]}.html`);
+        });
+    });
+}
+
 else {
 
     let help = `welcome to liff tool. 
