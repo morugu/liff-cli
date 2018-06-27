@@ -129,7 +129,7 @@ else if (process.argv[2] === 'create') {
               console.log(`cannot read ${process.argv[3]}.html`);
               throw err;
           }
-          console.log(`create sample app ${process.argv[3]}.html`);
+          console.log(`create sample application ${process.argv[3]}.html`);
         });
     });
 }
@@ -141,6 +141,7 @@ else {
         [usage]
         init: set liff commands.
         list: list all registered liff applications.
+        create <filename>: create sample liff application html file.
         add <url> <type:full|tall|compact>: create new liff application.
         update <liffId> <url> <type:full|tall|compact>: update the liff application.
         delete <liffId>: delete specified liff
@@ -149,6 +150,7 @@ else {
         
         [example]
         liff init {LINE_ACCESS_TOKEN}
+        liff create index
         liff list
         liff add https://developers.line.me/en/docs/liff/overview/ tall
         liff add https://developers.line.me/en/docs/liff/overview/ compact

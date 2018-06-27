@@ -17,6 +17,14 @@ set liff commands.
 $ liff init {LINE_ACCESS_TOKEN}
 ```
 
+### create
+create sample liff application html file.
+
+```
+$ liff create <filename>
+```
+
+
 ### list
 list all registered liff applications.
 
