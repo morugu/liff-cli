@@ -1,6 +1,6 @@
 {
   "name": "liff",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "LIFF(LINE Front-end Framework) cli",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,7 @@
     "LINE",
     "LINE Messaging API"
   ],
-  "author": "morugu",
+  "author": "Shoya Shiraki (https://github.com/morugu/)",
   "license": "MIT",
   "preferGlobal": true,
   "bin": {
