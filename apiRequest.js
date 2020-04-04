@@ -59,7 +59,7 @@ var apiRequest = {
     },
 
     sendLiff: function(liffId, userId){
-        let message = { "to": userId, "messages": [{ "type": "text", "text": `line://app/${liffId}` }] };
+        let message = { "to": userId, "messages": [{ "type": "text", "text": `https://liff.line.me/${liffId}` }] };
         let jsonMessage = JSON.stringify(message);
         const options = {
             url: `https://api.line.me/v2/bot/message/push`,
@@ -97,7 +97,7 @@ var apiRequest = {
                 if(apiRequest.isFailedStatus(response, body)) { return }
                 let jsonResult = JSON.parse(body);
                 console.log(`[LIFF ID] ${jsonResult.liffId} created`);
-                console.log(`accessible uri : line://app/${jsonResult.liffId}`);
+                console.log(`accessible uri : https://liff.line.me/${jsonResult.liffId}`);
             });
         })
     },

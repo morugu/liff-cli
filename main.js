@@ -37,7 +37,7 @@ if (process.argv[2] === 'list') {
             console.log('---------------------------------------------------');
             console.log(`No.${i + 1}`);
             console.log(`[LIFF ID] ${l.liffId}`);
-            console.log(`[LIFF App URL] line://app/${l.liffId}`);
+            console.log(`[LIFF App URL] https://liff.line.me/${l.liffId}`);
             console.log(`[Type] ${l.view.type}`);
             console.log(`[Web URL] ${l.view.url}`);
         })
