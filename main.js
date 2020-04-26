@@ -14,7 +14,7 @@ if (process.argv[2] === 'init') {
     }
 
     const LINE_ACCESS_TOKEN = process.argv[3];
-    fs.writeFile('.env', `LINE_ACCESS_TOKEN="${LINE_ACCESS_TOKEN}"`, (err) => {
+    fs.appendFile('.env', `LINE_ACCESS_TOKEN="${LINE_ACCESS_TOKEN}"`, (err) => {
       if (err) { throw err; }
     });
     console.log(`write ${LINE_ACCESS_TOKEN} in .env file`);
